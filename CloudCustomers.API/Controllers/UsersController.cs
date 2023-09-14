@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CloudCustomers.API.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CloudCustomers.API.Controllers
@@ -7,14 +8,22 @@ namespace CloudCustomers.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly ILogger<UsersController> _logger;
-        public UsersController(ILogger<UsersController> logger)
+        private readonly IUsersService _usersService;
+        public UsersController(IUsersService usersService)
         {
-            _logger = logger;
+            _usersService = usersService;
         }
 
         [HttpGet(Name = "GetUsers")]
         public async Task<IActionResult> Get()
-        => null;
+        {
+            var users = await _usersService.GetAllUsers();
+
+            if (users.Any())
+            {
+                return Ok(users);
+            }
+            return NotFound();
+        }
     }
 }
