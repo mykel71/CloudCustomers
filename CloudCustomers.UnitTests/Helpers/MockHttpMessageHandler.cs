@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace CloudCustomers.UnitTests.Helpers;
 
-internal static class MockHttpMessageHandler
+internal static class MockHttpMessageHandler<T>
 {
     internal static Mock<HttpMessageHandler> SetupBasicGetResourceList(List<T> expectedResponse)
     {
